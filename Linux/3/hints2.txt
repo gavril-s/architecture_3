@@ -79,3 +79,6 @@ ls -l | awk '{print $1, $9}' | sort
 Context: [ p:3901 c:406 t:4307 ]
 
 © GPT-4 Turbo
+
+
+last | awk -v user="$USER" '{if ($1 == user) count++} END {print count}'
