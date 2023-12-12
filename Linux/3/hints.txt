@@ -90,3 +90,11 @@ awk -v day="$todays_date" -v month="$current_month" -v wday="$weekday" '
       print "Дата не найдена в calendar.txt.";
   }
 ' calendar.txt
+
+
+sh
+ls -l | awk '/^d/ && $NF ~ /^[А-Яа-яёЁ]+$/ {print $9}'
+
+sh
+ls -ld */ | grep -P '^d.*[А-Яа-яЁё]+$'
+
