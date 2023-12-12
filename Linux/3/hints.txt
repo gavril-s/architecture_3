@@ -58,6 +58,35 @@
 
 Обратите внимание, что конкретные решения могут зависеть от формата данных и конкретной конфигурации вашей системы. Некоторые команды могут потребовать уточнения или адаптации.
 
-Context: [ p:278 c:828 t:1106 ]
+sh
+#!/bin/bash
 
-© GPT-4 Turbo
+# Получение текущего дня и месяца
+todays_date=$(date "+%e") # Пробел перед однозначным числом, если нужно
+current_month=$(date "+%B")
+weekday=$(date "+%A")
+
+# Используйте awk для поиска строки с текущим днем
+awk -v day="$todays_date" -v month="$current_month" -v wday="$weekday" '
+  BEGIN { 
+    split("вс пн вт ср чт пт сб", days, " ");
+    print "Результаты поиска в файле calendar.txt:"
+  }
+  NR > 2 { 
+    for (i = 1; i <= NF; i++) {
+      if ($i == day) {
+        day_index = i;
+        break;
+      }
+    }
+  }
+  NR == 2 {
+    day_name = days[day_index]
+  }
+  END {
+    if (day_index) 
+      print "сегодня", wday, day, month;
+    else
+      print "Дата не найдена в calendar.txt.";
+  }
+' calendar.txt
